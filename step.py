@@ -1,6 +1,6 @@
-class Segment:
+class Step:
 
-    def __init__(self, direction, length):
+    def __init__(self, direction: str, length: int):
         self.direction: str = direction
         self.length: int = length
 

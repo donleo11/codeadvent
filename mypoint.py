@@ -1,29 +1,10 @@
 class MyPoint:
-    def __init__(self, x, y, direction, value):
+    def __init__(self, x: int, y: int):
         self.x: int = x
         self.y: int = y
-        self.direction: str = direction
-        self.value: int = value
 
     def __repr__(self):
-        return "hello"
-
-    def next_point(self):
-        nextx = 0
-        nexty = 0
-        if self.direction == "R":
-            nextx = self.x + self.value
-            nexty = self.y
-        elif self.direction == "L":
-            nextx = self.x - self.value
-            nexty = self.y
-        elif self.direction == "U":
-            nexty = self.y + self.value
-            nextx = self.x
-        elif self.direction == "D":
-            nexty = self.y - self.value
-            nextx = self.x
-        return [nextx, nexty]
+        return "x: " + str(self.x) + ", y: " + str(self.y)
 
     def in_range(self, point):
         if self.next_point()[0] == point[0]:
