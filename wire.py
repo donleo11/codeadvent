@@ -4,4 +4,4 @@ class Wire:
         self.coordinates = coordinates
 
     def __repr__(self):
-        return "hello"
+        return "Object Wire"

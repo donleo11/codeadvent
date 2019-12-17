@@ -44,7 +44,9 @@ def generatecoordinates(steps):
     coordinates.append(MyPoint(0, 0))
     last_point = coordinates[0]
     for step in steps:
-        coordinates.append(getnextpoint(step, last_point))
+        point = getnextpoint(step, last_point)
+        coordinates.append(point)
+        last_point = point
     return coordinates
 
 
@@ -57,20 +59,3 @@ def getnextpoint(step: Step, oldpoint: MyPoint):
         return MyPoint(oldpoint.x, oldpoint.y + step.length)
     elif step.direction == "D":
         return MyPoint(oldpoint.x, oldpoint.y - step.length)
-
-    def next_point(self):
-        nextx = 0
-        nexty = 0
-        if self.direction == "R":
-            nextx = self.x + self.value
-            nexty = self.y
-        elif self.direction == "L":
-            nextx = self.x - self.value
-            nexty = self.y
-        elif self.direction == "U":
-            nexty = self.y + self.value
-            nextx = self.x
-        elif self.direction == "D":
-            nexty = self.y - self.value
-            nextx = self.x
-        return [nextx, nexty]

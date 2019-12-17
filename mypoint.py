@@ -4,7 +4,7 @@ class MyPoint:
         self.y: int = y
 
     def __repr__(self):
-        return "x: " + str(self.x) + ", y: " + str(self.y)
+        return "x: " + str(self.x) + "| y: " + str(self.y)
 
     def in_range(self, point):
         if self.next_point()[0] == point[0]:

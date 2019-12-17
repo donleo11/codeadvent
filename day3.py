@@ -102,7 +102,8 @@ wire2string = str(stringlist[1]).strip().split(",")
 steps2 = utils.generatesteps(wire2string)
 coordinates2 = utils.generatecoordinates(steps2)
 
-wire1 = Wire()
+wire1 = Wire(steps1, coordinates1)
+wire2 = Wire(steps2, coordinates2)
 
 
 # matches = find_matches(cord1string, cord2string)
