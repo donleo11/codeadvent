@@ -1,3 +1,6 @@
+from constants import Constants
+
+
 class Step:
 
     def __init__(self, direction: str, length: int):
@@ -6,3 +9,10 @@ class Step:
 
     def __repr__(self):
         return self.direction + str(self.length)
+
+    def getoperator(self):
+        if self.direction == Constants.right or self.direction == Constants.down:
+            return 0 - self.length
+        else:
+            return self.length
+

@@ -1,5 +1,5 @@
 from mypoint import MyPoint
-from step import Step
+from segment import Segment
 
 
 def getinput(filename):
@@ -32,30 +32,49 @@ def converttoint(stringlist):
     return intlist
 
 
-def generatesteps(string_list):
-    step_list = list()
-    for step in string_list:
-        step_list.append(Step(step[0], int(step[1:])))
-    return step_list
+def generatesegments(string_list):
+    segment_list = list()
+    firstpoint: MyPoint = MyPoint(0, 0)
+    for segment_string in string_list:
+        segment = Segment(segment_string[0], int(segment_string[1:]), firstpoint)
+        segment_list.append(segment)
+        firstpoint = segment.getsecondpoint()
+    return segment_list
 
 
-def generatecoordinates(steps):
-    coordinates = list()
-    coordinates.append(MyPoint(0, 0))
-    last_point = coordinates[0]
-    for step in steps:
-        point = getnextpoint(step, last_point)
-        coordinates.append(point)
-        last_point = point
-    return coordinates
+def segment_intersection(segment1: Segment, segment2: Segment):
+    if segment1.inxrange(segment2) and segment1.inyrange(segment2):
+        return line_intersection(segment1, segment2)
+    else:
+        return False
 
 
-def getnextpoint(step: Step, oldpoint: MyPoint):
-    if step.direction == 'R':
-        return MyPoint(oldpoint.x + step.length, oldpoint.y)
-    elif step.direction == 'L':
-        return MyPoint(oldpoint.x - step.length, oldpoint.y)
-    elif step.direction == 'U':
-        return MyPoint(oldpoint.x, oldpoint.y + step.length)
-    elif step.direction == "D":
-        return MyPoint(oldpoint.x, oldpoint.y - step.length)
+def line_intersection(segment1: Segment, segment2: Segment):
+    xdiff: MyPoint = MyPoint(segment1.firstpoint.x - segment1.getsecondpoint().x,
+                             segment2.firstpoint.x - segment2.getsecondpoint().x)
+    ydiff: MyPoint = MyPoint(segment1.firstpoint.y - segment1.getsecondpoint().y,
+                             segment2.firstpoint.y - segment2.getsecondpoint().y)
+
+    div = det(xdiff, ydiff)
+    if div == 0:
+        raise Exception('lines do not intersect')
+
+    d: MyPoint = MyPoint(det(segment1.firstpoint, segment1.getsecondpoint()),
+                         det(segment2.firstpoint, segment2.getsecondpoint()))
+    x = det(d, xdiff) / div
+    y = det(d, ydiff) / div
+    return MyPoint(x, y)
+
+
+def det(a: MyPoint, b: MyPoint):
+    return a.x * b.y - a.y * b.x
+
+# def findintersect(wire1: Wire, wire2: Wire):
+#     for i in range(len(wire1.steps)):
+#         for j in range(len(wire2.steps)):
+#
+#         wirepoint: MyPoint = wire.coordinates[i]
+#         step: Step = wire.steps[i]
+#         if (step.direction == Constants.right or step.direction == Constants.left) and wirepoint.y == point.y:
+#             if step.direction == Constants.right and wirepoint.x < point.x < step.length + wirepoint.x:
+#                 return MyPoint(point.x, )

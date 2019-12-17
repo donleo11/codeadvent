@@ -1,6 +1,8 @@
 import math
 
 import utils
+from mypoint import MyPoint
+from segment import Segment
 from step import Step
 
 # def getsegments(cordstring):
@@ -96,14 +98,20 @@ from wire import Wire
 
 stringlist = utils.getinput2("day3.txt")
 wire1string = str(stringlist[0]).strip().split(",")
-steps1 = utils.generatesteps(wire1string)
-coordinates1 = utils.generatecoordinates(steps1)
 wire2string = str(stringlist[1]).strip().split(",")
-steps2 = utils.generatesteps(wire2string)
-coordinates2 = utils.generatecoordinates(steps2)
 
-wire1 = Wire(steps1, coordinates1)
-wire2 = Wire(steps2, coordinates2)
+segments1 = utils.generatesegments(wire1string)
+segments2 = utils.generatesegments(wire2string)
+
+intersections = list()
+
+for segment1 in segments1:
+    for segment2 in segments2:
+        intersect = utils.segment_intersection(segment1, segment2)
+        if intersect:
+            intersections.append(intersect)
+
+print(intersections)
 
 
 # matches = find_matches(cord1string, cord2string)
