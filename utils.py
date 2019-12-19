@@ -99,8 +99,10 @@ def find_intersects(segments1, segments2):
                     intersections.append(intersect)
     return intersections
 
+
 def distance(a: MyPoint, b: MyPoint):
     return math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2)
+
 
 def is_between(a: MyPoint, c: MyPoint, b: MyPoint):
     return distance(a, c) + distance(c, b) == distance(a, b)
@@ -113,9 +115,9 @@ def count_steps(segments, point: MyPoint):
             count = count + segment.length
         else:
             if segment.ishorizontal():
-                count = count + (segment.getoperator() - point.x)
+                return count + abs(segment.firstpoint.x - point.x)
             else:
-                count = count + (segment.getoperator() - point.y)
+                return count + abs(segment.firstpoint.y - point.y)
     return count
 
 
@@ -126,4 +128,3 @@ def find_closest_step(segments1, segments2, intersections):
         count2: int = count_steps(segments2, intersect)
         if count1 + count2 < count: count = count1 + count2
     return count
-
