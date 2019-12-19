@@ -29,19 +29,4 @@ class Segment:
     def isvertical(self):
         return self.direction == Constants.up or self.direction == Constants.down
 
-    def inxrange(self, segment):
-        if self.direction == Constants.right:
-            return self.firstpoint.x < segment.firstpoint.x < self.getsecondpoint().x
-        elif self.direction == Constants.left:
-            return self.getsecondpoint().x < segment.firstpoint.x < self.firstpoint.x
-        return False
-
-    def inyrange(self, segment):
-        if self.direction == Constants.up:
-            return self.firstpoint.y < segment.firstpoint.y < self.getsecondpoint().y
-        elif self.direction == Constants.down:
-            return self.getsecondpoint().y < segment.firstpoint.y < self.firstpoint.y
-        return False
-
-
 

@@ -1,35 +1,8 @@
+import math
+
+from constants import Constants
 from mypoint import MyPoint
 from segment import Segment
-
-
-def getinput(filename):
-    with open(filename, "r") as f:
-        linelist = f.readlines()
-
-    cleanlist = list()
-    for line in linelist:
-        cleanlist.append(line.strip())
-    return cleanlist
-
-
-def getinput2(filename):
-    with open(filename, "r") as f:
-        linelist = f.readlines()
-    return linelist
-
-
-def converttofloat(stringlist):
-    floatlist = list()
-    for line in stringlist:
-        floatlist.append(float(line))
-    return floatlist
-
-
-def converttoint(stringlist):
-    intlist = list()
-    for line in stringlist:
-        intlist.append(int(line))
-    return intlist
 
 
 def generatesegments(string_list):
@@ -43,7 +16,7 @@ def generatesegments(string_list):
 
 
 def segment_intersection(segment1: Segment, segment2: Segment):
-    if segment1.inxrange(segment2) and segment1.inyrange(segment2):
+    if inxrange(segment1, segment2) and inyrange(segment1, segment2):
         return line_intersection(segment1, segment2)
     else:
         return False
@@ -69,12 +42,88 @@ def line_intersection(segment1: Segment, segment2: Segment):
 def det(a: MyPoint, b: MyPoint):
     return a.x * b.y - a.y * b.x
 
-# def findintersect(wire1: Wire, wire2: Wire):
-#     for i in range(len(wire1.steps)):
-#         for j in range(len(wire2.steps)):
-#
-#         wirepoint: MyPoint = wire.coordinates[i]
-#         step: Step = wire.steps[i]
-#         if (step.direction == Constants.right or step.direction == Constants.left) and wirepoint.y == point.y:
-#             if step.direction == Constants.right and wirepoint.x < point.x < step.length + wirepoint.x:
-#                 return MyPoint(point.x, )
+
+def inrange(segment1: Segment, segment2: Segment):
+    if segment1.ishorizontal() and segment2.ishorizontal() or segment1.isvertical() and segment2.isvertical():
+        return False
+    else:
+        horizontal_segment: Segment = segment1 if segment1.ishorizontal() else segment2
+        vertical_segment: Segment = segment1 if segment1.isvertical() else segment2
+        return inxrange(horizontal_segment, vertical_segment) and inyrange(horizontal_segment, vertical_segment)
+
+
+def inxrange(horizontal_segment: Segment, vertical_segment: Segment):
+    if horizontal_segment.direction == Constants.right:
+        return horizontal_segment.firstpoint.x <= vertical_segment.firstpoint.x <= horizontal_segment.getsecondpoint().x
+    else:
+        return horizontal_segment.getsecondpoint().x <= vertical_segment.firstpoint.x <= horizontal_segment.firstpoint.x
+
+
+def inyrange(horizontal_segment: Segment, vertical_segment: Segment):
+    if vertical_segment.direction == Constants.up:
+        return vertical_segment.firstpoint.y <= horizontal_segment.firstpoint.y <= vertical_segment.getsecondpoint().y
+    else:
+        return vertical_segment.getsecondpoint().y <= horizontal_segment.firstpoint.y <= vertical_segment.firstpoint.y
+
+
+def getclosest_point(points):
+    closest_distance = math.inf
+    closest_point: MyPoint
+    for point in points:
+        distance = getmanhattan_distance(point)
+        if distance < closest_distance:
+            closest_distance = distance
+            closest_point = point
+    return closest_point
+
+
+def getmanhattan_distance(point: MyPoint):
+    return abs(point.x) + abs(point.y)
+
+
+def remove_duplicates(the_list):
+    res = list()
+    for i in the_list:
+        if i not in res:
+            res.append(i)
+    return res
+
+
+def find_intersects(segments1, segments2):
+    intersections = list()
+    for segment1 in segments1:
+        for segment2 in segments2:
+            if segment1.ishorizontal() and segment2.isvertical() or segment1.isvertical() and segment2.ishorizontal():
+                intersect = segment_intersection(segment1, segment2)
+                if intersect:
+                    intersections.append(intersect)
+    return intersections
+
+def distance(a: MyPoint, b: MyPoint):
+    return math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2)
+
+def is_between(a: MyPoint, c: MyPoint, b: MyPoint):
+    return distance(a, c) + distance(c, b) == distance(a, b)
+
+
+def count_steps(segments, point: MyPoint):
+    count: int = 0
+    for segment in segments:
+        if not is_between(segment.firstpoint, point, segment.getsecondpoint()):
+            count = count + segment.length
+        else:
+            if segment.ishorizontal():
+                count = count + (segment.getoperator() - point.x)
+            else:
+                count = count + (segment.getoperator() - point.y)
+    return count
+
+
+def find_closest_step(segments1, segments2, intersections):
+    count = math.inf
+    for intersect in intersections:
+        count1: int = count_steps(segments1, intersect)
+        count2: int = count_steps(segments2, intersect)
+        if count1 + count2 < count: count = count1 + count2
+    return count
+

@@ -3,5 +3,10 @@ class MyPoint:
         self.x: int = x
         self.y: int = y
 
-    def __repr__(self):
-        return "x: " + str(self.x) + "| y: " + str(self.y)
+    def __eq__(self, other):
+        """Override the default Equals behavior"""
+        return self.x == other.x and self.y == other.y
+
+    def __ne__(self, other):
+        """Override the default Unequal behavior"""
+        return self.x != other.x or self.y != other.y
