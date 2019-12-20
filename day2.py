@@ -1,4 +1,4 @@
-import utils
+import segment_utils
 import random
 
 
@@ -39,11 +39,11 @@ def find_output(intlist, target):
 
 
 # get content
-content = utils.getinput("day2.txt")[0]
+content = segment_utils.getinput("day2.txt")[0]
 
 stringcontent = str(content)
 stringlist = stringcontent.split(",")
-intlist = utils.converttoint(stringlist)
+intlist = segment_utils.converttoint(stringlist)
 
 # intcode_calculations(intlist, noun, verb)
 noun, verb = find_output(intlist, 19690720)
