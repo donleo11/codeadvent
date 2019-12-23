@@ -13,7 +13,6 @@ def getinput2(filename):
         linelist = f.readlines()
     return linelist
 
-
 def converttofloat(stringlist):
     floatlist = list()
     for line in stringlist:
