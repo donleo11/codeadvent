@@ -6,7 +6,7 @@ import read_utils
 # Going from left to right, the digits never decrease; they only ever increase or stay the same (like 111123 or 135679).
 
 # get puzzle input
-from password_validator import PasswordValidator
+from day4.password_validator import PasswordValidator
 
 puzzle_input = read_utils.getinput('day4.txt')[0]
 ranges = str(puzzle_input).strip().split("-")

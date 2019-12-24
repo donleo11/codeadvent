@@ -1,5 +1,5 @@
 from constants import Constants
-from mypoint import MyPoint
+from day3.mypoint import MyPoint
 
 
 class Segment:

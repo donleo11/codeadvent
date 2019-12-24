@@ -1,8 +1,8 @@
 import math
 
 from constants import Constants
-from mypoint import MyPoint
-from segment import Segment
+from day3.mypoint import MyPoint
+from day3.segment import Segment
 
 
 def generatesegments(string_list):

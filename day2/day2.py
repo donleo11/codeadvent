@@ -1,4 +1,4 @@
-import segment_utils
+from day3 import segment_utils
 import random
 
 

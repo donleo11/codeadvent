@@ -1,6 +1,6 @@
 import read_utils
-import segment_utils
-from mypoint import MyPoint
+from day3 import segment_utils
+from day3.mypoint import MyPoint
 
 # get content
 stringlist = read_utils.getinput2("day3.txt")

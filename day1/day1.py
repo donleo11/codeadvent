@@ -1,7 +1,5 @@
 import math
-import segment_utils
-
-
+from day3 import segment_utils
 
 
 def calculate_fuel_requirement(mass):
