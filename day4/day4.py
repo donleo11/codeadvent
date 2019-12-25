@@ -6,7 +6,7 @@ import read_utils
 # Going from left to right, the digits never decrease; they only ever increase or stay the same (like 111123 or 135679).
 
 # get puzzle input
-from day4.password_validator import PasswordValidator
+from password_validator import PasswordValidator
 
 puzzle_input = read_utils.getinput('day4.txt')[0]
 ranges = str(puzzle_input).strip().split("-")
@@ -24,7 +24,8 @@ for i in range(low_range+1, high_range-1):
             & password_validator.isDecrease(digit_str)
     if valid:
         count = count + 1
-        print("Valid password: ", i)
 
-print("Total number of possible passwords: ", count)
+print("Question 4A: Total number of possible passwords: ", count)
+
+
 

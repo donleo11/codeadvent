@@ -8,8 +8,6 @@ class PasswordValidator:
         self.decrease: bool = decrease
         self.length: int = length
 
-    # def validate_nodoubles(self, digit: str):
-    #     for c in digit:
 
     def validateLength(self, digit: str):
         return self.length == len(digit)
@@ -29,3 +27,22 @@ class PasswordValidator:
                 return False
             previous_digit = int(c)
         return True
+
+    # double digit not part of a larger group of digits
+    def isOnlyDouble(self, digit: str):
+        previous_digit1: int = -1
+        previous_digit2: int = -2
+        for c in digit:
+            if previous_digit1 == int(c) and previous_digit2 != int(c):
+                return True
+            previous_digit2 = previous_digit1
+            previous_digit1 = int(c)
+        return True
+
+
+password_validator = PasswordValidator(True, False, 6)
+print(password_validator.isOnlyDouble("123444"))
+
+
+
+

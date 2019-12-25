@@ -1,5 +1,8 @@
+import read_utils
 from day3 import segment_utils
 import random
+
+from intcode import Intcode
 
 
 def set_noun(intlist, noun):
@@ -39,11 +42,17 @@ def find_output(intlist, target):
 
 
 # get content
-content = segment_utils.getinput("day2.txt")[0]
+content = read_utils.getinput("day2.txt")[0]
 
 stringcontent = str(content)
 stringlist = stringcontent.split(",")
-intlist = segment_utils.converttoint(stringlist)
+intlist = read_utils.converttoint(stringlist)
+intcode_list = list()
+for i in range(len(intlist)):
+    intcode_list.append(Intcode(intlist[i:i+3]))
+
+
+
 
 # intcode_calculations(intlist, noun, verb)
 noun, verb = find_output(intlist, 19690720)

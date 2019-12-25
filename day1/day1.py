@@ -1,5 +1,5 @@
 import math
-from day3 import segment_utils
+import read_utils
 
 
 def calculate_fuel_requirement(mass):
@@ -17,10 +17,10 @@ def calculate_fuel_requirement_advanced(mass):
 
 
 # get the input
-stringlist = segment_utils.getinput("day1.txt")
+stringlist = read_utils.getinput("day1.txt")
 
 # convert to list of ints
-masslist = segment_utils.converttofloat(stringlist)
+masslist = read_utils.converttofloat(stringlist)
 
 sum_fuel_requirement = 0
 for mass in masslist:
