@@ -27,5 +27,16 @@ for i in range(low_range+1, high_range-1):
 
 print("Question 4A: Total number of possible passwords: ", count)
 
+# count the amount of numbers within the range that meets the criteria
+count = 0
+for i in range(low_range+1, high_range-1):
+    digit_str: str = str(i)
+    valid = password_validator.validateLength(digit_str) & password_validator.isOnlyDouble(digit_str) \
+            & password_validator.isDecrease(digit_str)
+    if valid:
+        count = count + 1
+
+print("Question 4B: Total number of possible passwords: ", count)
+
 
 
