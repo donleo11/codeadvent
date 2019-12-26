@@ -6,10 +6,10 @@ def count_orbits(orbits):
     count2 = 0
     for orbit in orbits:
         count_tmp = count_direct_orbits(orbit, orbits)
-        print("Orbiter ", orbit.orbiter, " has ", count_tmp, " direct orbits")
+        # print("Orbiter ", orbit.orbiter, " has ", count_tmp, " direct orbits")
         count1 = count1 + count_tmp
         count_tmp = count_indirect_orbits(orbit, orbits)
-        print("Orbiter ", orbit.orbiter, " has ", count_tmp, " indirect orbits")
+        # print("Orbiter ", orbit.orbiter, " has ", count_tmp, " indirect orbits")
         count2 = count2 + count_tmp
     return count1 + count2
 
@@ -41,3 +41,24 @@ def find_direct_orbit(orbiter: str, orbits):
         if orbit.orbiter == orbiter:
             direct_orbits_list.append(orbit)
     return direct_orbits_list
+
+
+def find_path(original_orbit: Orbit, orbits: list, path: list):
+    for orbit in orbits:
+        if original_orbit.orbitee == orbit.orbiter:
+            path.append(orbit)
+            find_path(orbit, orbits, path)
+    return path
+
+
+def find_orbiter(orbiter: str, orbits: list):
+    for orbit in orbits:
+        if orbiter == orbit.orbiter:
+            return orbit
+
+
+def find_crossing(path1: list, path2: list):
+    for orbit1 in path1:
+        for orbit2 in path2:
+            if orbit1 == orbit2:
+                return orbit1
